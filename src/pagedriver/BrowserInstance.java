@@ -24,6 +24,7 @@ public class BrowserInstance {
 		
 	}
 	public static WebDriver buildChromeDriver(){
+		System.setProperty("webdriver.chrome.driver","C:\\Users\\bborsos\\Desktop\\chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(Constants.IMPLICIT_WAIT, TimeUnit.SECONDS);
 		return driver;

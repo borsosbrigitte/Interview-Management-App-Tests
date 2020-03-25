@@ -10,21 +10,27 @@ public class SeniorityLevelsActions {
 		this.driver = driver;
 	}
 	
-	public void addSeniority(String seniorityname){
+	public void addNew(String seniorityname){
 		SeniorityLevelsPage senioritylevelsPage = new SeniorityLevelsPage(driver);
-		senioritylevelsPage.clickSeniorityLevelsNav();
-		senioritylevelsPage.clickNewSeniorityButton();
-		senioritylevelsPage.enterSeniorityLevelName(seniorityname);
+		senioritylevelsPage.clickNewButton();
+		senioritylevelsPage.enterName(seniorityname);
 		senioritylevelsPage.clickConfirm();
-		
 	}
-	
-	public void cancelAddingSeniority() {
+	public void editLast(String seniorityname){
 		SeniorityLevelsPage senioritylevelsPage = new SeniorityLevelsPage(driver);
-		senioritylevelsPage.clickSeniorityLevelsNav();
-		senioritylevelsPage.clickNewSeniorityButton();
+		senioritylevelsPage.clickEdit();
+		senioritylevelsPage.enterName(seniorityname);
+		senioritylevelsPage.clickConfirm();
+	}
+	public void deleteLast(){
+		SeniorityLevelsPage senioritylevelsPage = new SeniorityLevelsPage(driver);
+		senioritylevelsPage.clickDelete();
+		senioritylevelsPage.clickConfirm();
+	}
+	public void cancelAdding() {
+		SeniorityLevelsPage senioritylevelsPage = new SeniorityLevelsPage(driver);
+		senioritylevelsPage.clickNewButton();
 		senioritylevelsPage.clickCancel();
 	}
 	
-
 }
