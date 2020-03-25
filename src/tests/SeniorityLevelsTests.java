@@ -33,7 +33,7 @@ public class SeniorityLevelsTests extends BasePage {
 
 	}
 
-	@Test 
+	@Test @Ignore
 	//Smoke test 
 	public void addEditDeleteSeniority() throws InterruptedException {
 		Page.navigateTo(ConfigFileReader.getAppURL());
@@ -70,6 +70,8 @@ public class SeniorityLevelsTests extends BasePage {
 
 		seniorityFlow.addNew("Junior");
 		Thread.sleep(3000);
+		assertEquals("Junior", senioritylevelsPage.getLastName());
+		seniorityFlow.addNew("Junior");
 		assertTrue(senioritylevelsPage.confirmIsDisabled());
 		assertEquals(Messages.EXISTING_SENIORITY, Page.getAlertText());
 		assertTrue(senioritylevelsPage.nameisInvalid());
@@ -113,7 +115,28 @@ public class SeniorityLevelsTests extends BasePage {
 		assertTrue(senioritylevelsPage.nameisInvalid());
 
 	}
+	@Test 
+	public void editWithAlreadyExistingName() throws InterruptedException{
+		Page.navigateTo(ConfigFileReader.getAppURL());
+		assertEquals(Messages.APPLICATION_TITLE, Page.getTitle());
+
+		loginFlow.login("Yonder1", "1Yonder");
+		assertEquals("home works!", loginPage.getDashboardAreaMessage());
+
+		menu.openSeniorityLevelsPage();
+		
+		seniorityFlow.addNew("AlreadyExistingEdit");
+		Thread.sleep(2000);
+		assertEquals("AlreadyExistingEdit", senioritylevelsPage.getLastName());
+		
+		senioritylevelsPage.getSeniorities();
+		Thread.sleep(2000);
 	
+		seniorityFlow.editLast("AlreadyExistingEdit");
+		assertTrue(senioritylevelsPage.confirmIsDisabled());
+		assertEquals(Messages.EXISTING_SENIORITY, Page.getAlertText());
+		assertTrue(senioritylevelsPage.nameisInvalid());
+	}
 	@AfterClass
 	public static void CloseTest() {
 		Page.close();

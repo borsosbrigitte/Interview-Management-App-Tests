@@ -12,9 +12,8 @@ public class SeniorityLevelsPage {
 		this.driver = driver;
 	}
 	// UI Mapper
-
-	//nu e bun xpath
-	By senioritiesDashboard = By.xpath("//*[@class=\"elements-container\"]");
+	
+	By senioritiesDashboard = By.xpath("//div[@class=\"elements-container\"]");
 	By newBtn = By.xpath("//button[@class='mat-focus-indicator mat-icon-button mat-button-base']");
 	By nameField = By.xpath("//input[@name='name']");
 	By nameFieldInvalid = By.xpath("//input[@name='name'][@aria-invalid='true']");
