@@ -27,7 +27,9 @@ import utils.Messages;
 import utils.Util;
 
 public class SeniorityLevelsTests extends BasePage {
-
+	
+	String randomstr=Util.generateRandomString();
+	
 	@BeforeClass
 	public static void Start() {
 
@@ -44,16 +46,16 @@ public class SeniorityLevelsTests extends BasePage {
 
 		menu.openSeniorityLevelsPage();
 	
-		seniorityFlow.addNew("TestSeniority");
+		seniorityFlow.addNew("TestSeniority"+randomstr);
 		Thread.sleep(2000);
-		assertEquals("TestSeniority", senioritylevelsPage.getLastName());
+		assertEquals("TestSeniority"+randomstr, senioritylevelsPage.getLastName());
 
-		seniorityFlow.editLast("TestSeniorityEdit");
+		seniorityFlow.editLast("TestSeniorityEdit"+randomstr);
 		Thread.sleep(2000);
-		assertEquals("TestSeniorityEdit", senioritylevelsPage.getLastName());
+		assertEquals("TestSeniorityEdit"+randomstr, senioritylevelsPage.getLastName());
 
 		seniorityFlow.deleteLast();
-		assertNotEquals("TestSeniorityEdit", senioritylevelsPage.getLastName());
+		assertNotEquals("TestSeniorityEdit"+randomstr, senioritylevelsPage.getLastName());
 	}
 	
 	//Negative scenarios
@@ -68,10 +70,10 @@ public class SeniorityLevelsTests extends BasePage {
 		
 		menu.openSeniorityLevelsPage();
 
-		seniorityFlow.addNew("Junior");
+		seniorityFlow.addNew("Junior"+randomstr);
 		Thread.sleep(3000);
-		assertEquals("Junior", senioritylevelsPage.getLastName());
-		seniorityFlow.addNew("Junior");
+		assertEquals("Junior"+randomstr, senioritylevelsPage.getLastName());
+		seniorityFlow.addNew("Junior"+randomstr);
 		assertTrue(senioritylevelsPage.confirmIsDisabled());
 		assertEquals(Messages.EXISTING_SENIORITY, Page.getAlertText());
 		assertTrue(senioritylevelsPage.nameisInvalid());
@@ -87,7 +89,7 @@ public class SeniorityLevelsTests extends BasePage {
 		
 		menu.openSeniorityLevelsPage();
 
-		seniorityFlow.addNew("#$%Intern@#$");
+		seniorityFlow.addNew("#$%Intern@#$"+randomstr);
 		Thread.sleep(2000);
 		assertTrue(senioritylevelsPage.confirmIsDisabled());
 		assertEquals(Messages.INVALID_SENIORITY, Page.getAlertText());
@@ -104,11 +106,11 @@ public class SeniorityLevelsTests extends BasePage {
 
 		menu.openSeniorityLevelsPage();
 		
-		seniorityFlow.addNew("SeniorityTest");
+		seniorityFlow.addNew("SeniorityTest"+randomstr);
 		Thread.sleep(2000);
-		assertEquals("SeniorityTest", senioritylevelsPage.getLastName());
+		assertEquals("SeniorityTest"+randomstr, senioritylevelsPage.getLastName());
 
-		seniorityFlow.editLast("$%SeniorityTestEdit%$");
+		seniorityFlow.editLast("$%SeniorityTestEdit%$"+randomstr);
 		Thread.sleep(2000);
 		assertTrue(senioritylevelsPage.confirmIsDisabled());
 		assertEquals(Messages.INVALID_SENIORITY, Page.getAlertText());
@@ -125,14 +127,14 @@ public class SeniorityLevelsTests extends BasePage {
 
 		menu.openSeniorityLevelsPage();
 		
-		seniorityFlow.addNew("AlreadyExistingEdit");
+		seniorityFlow.addNew("AlreadyExistingEdit"+randomstr);
 		Thread.sleep(2000);
-		assertEquals("AlreadyExistingEdit", senioritylevelsPage.getLastName());
+		assertEquals("AlreadyExistingEdit"+randomstr, senioritylevelsPage.getLastName());
 		
 		senioritylevelsPage.getSeniorities();
 		Thread.sleep(2000);
 	
-		seniorityFlow.editLast("AlreadyExistingEdit");
+		seniorityFlow.editLast("AlreadyExistingEdit"+randomstr);
 		assertTrue(senioritylevelsPage.confirmIsDisabled());
 		assertEquals(Messages.EXISTING_SENIORITY, Page.getAlertText());
 		assertTrue(senioritylevelsPage.nameisInvalid());

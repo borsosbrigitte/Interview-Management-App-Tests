@@ -1,5 +1,6 @@
 package tests;
 
+import utils.Util;
 import static org.junit.Assert.*;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -49,7 +50,7 @@ public class LoginTests extends BasePage{
 		Page.navigateTo(ConfigFileReader.getAppURL());
 		assertEquals(Messages.APPLICATION_TITLE, Page.getTitle());
 
-		loginFlow.login("Yonder1", "unmatchingPassWorD100");
+		loginFlow.login("Yonder1", "unmatchingPassword"+Util.generateRandomInt(2000));
 		
 		assertEquals(Messages.LOGIN_ERROR, Page.getAlertText());
 	}
@@ -59,7 +60,7 @@ public class LoginTests extends BasePage{
 		Page.navigateTo(ConfigFileReader.getAppURL());
 		assertEquals(Messages.APPLICATION_TITLE, Page.getTitle());
 
-		loginFlow.login("InexistingUser101", "InexistingUserPassword");
+		loginFlow.login("InexistingUser"+Util.generateRandomInt(2000), "InexistingUserPassword"+Util.generateRandomInt(2000));
 		
 		assertEquals(Messages.LOGIN_ERROR, Page.getAlertText());
 	}
