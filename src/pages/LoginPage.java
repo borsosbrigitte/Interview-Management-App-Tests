@@ -2,7 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
+import pages.Menu;
 public class LoginPage {
 	public WebDriver driver;
 	
@@ -12,11 +12,11 @@ public class LoginPage {
 	//UI Mapper
 	By usernameField = By.xpath("//input[@name='username']");	
 	By passwordField = By.xpath("//input[@name='password']");
-	//trebuie sa am un check si daca fieldul e marcat ca si mandatory
+	// check daca fieldul e marcat ca si mandatory
 	By usernameFieldInvalid = By.xpath("//input[@name='username'][@aria-invalid='true']");
 	By passwordFieldInvalid = By.xpath("//input[@name='password'][@aria-invalid='true']");
 	By loginBtn = By.xpath("//button/span[text()='Login']");
-	By dashboardArea = By.xpath("//app-home");
+	By signOutBtn = By.xpath("//button/span[text()='Sign out']");
 	
 	//Actions
 	public void enterUsername(String username){
@@ -28,11 +28,18 @@ public class LoginPage {
 	public void clickLogin(){
 		driver.findElement(loginBtn).click();
 	}
-	
-	public String getDashboardAreaMessage() {
-		return driver.findElement(dashboardArea).getText();
-		
+	public void signOut() {
+		driver.findElement(signOutBtn).click();
 	}
+	
+	public Boolean userIsSignedIn(){
+		Boolean present = false;
+		if (driver.findElement(signOutBtn).isDisplayed()){
+			present = true;
+		}
+		return present;
+	}
+	
 	public Boolean usernameIsInvalid(){
 		Boolean present = false;
 		if (driver.findElement(usernameFieldInvalid).isDisplayed()){

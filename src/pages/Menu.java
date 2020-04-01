@@ -16,6 +16,7 @@ public class Menu {
 	By questionsMenu = By.xpath("//div/a[@href='/questions']");
 	By competenciesMenu = By.xpath("//div/a[@href='/competencies']");
 	By seniorityLevelsMenu = By.xpath("//div/a[@href='/seniorities']");
+	By signOutBtn = By.xpath("//button/span[text()='Sign out']");
 	
 	//Actions
 	public void openHomePage() {
@@ -32,5 +33,8 @@ public class Menu {
 	}
 	public void openSeniorityLevelsPage() {
 		driver.findElement(seniorityLevelsMenu).click();
+	}
+	public void signOut() {
+		driver.findElement(signOutBtn).click();
 	}
 }

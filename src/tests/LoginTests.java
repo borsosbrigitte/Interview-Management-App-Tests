@@ -8,6 +8,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import pagedriver.Page;
 import pages.BasePage;
+import pages.Menu;
 import utils.ConfigFileReader;
 import utils.Messages;
 
@@ -27,7 +28,7 @@ public class LoginTests extends BasePage{
 
 		loginFlow.login("Yonder1", "1Yonder");
 
-		assertEquals("home works!", loginPage.getDashboardAreaMessage());
+		assertTrue(loginPage.userIsSignedIn());
 	}
 
 	// Negative scenarios

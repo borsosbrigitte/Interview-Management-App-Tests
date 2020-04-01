@@ -19,6 +19,7 @@ public class SeniorityLevelsActions {
 	public void editLast(String seniorityname){
 		SeniorityLevelsPage senioritylevelsPage = new SeniorityLevelsPage(driver);
 		senioritylevelsPage.clickEdit();
+		senioritylevelsPage.clearName();
 		senioritylevelsPage.enterName(seniorityname);
 		senioritylevelsPage.clickConfirm();
 	}

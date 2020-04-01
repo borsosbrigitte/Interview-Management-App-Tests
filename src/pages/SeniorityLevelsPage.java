@@ -13,11 +13,11 @@ public class SeniorityLevelsPage {
 	}
 	// UI Mapper
 	
-	By senioritiesDashboard = By.xpath("//div[@class=\"elements-container\"]");
+	By senioritiesDashboard = By.xpath("//div[@class='elements-container']");
 	By newBtn = By.xpath("//button[@class='mat-focus-indicator mat-icon-button mat-button-base']");
 	By nameField = By.xpath("//input[@name='name']");
 	By nameFieldInvalid = By.xpath("//input[@name='name'][@aria-invalid='true']");
-	By lastName = By.xpath("//div/following::mat-card-title[last()]");
+	By lastSeniority = By.xpath("//div/following::mat-card-title[last()]");
 	By lastEditBtn = By.xpath("//div/following::span[contains(.,'Edit')][last()]");
 	By lastDeleteBtn = By.xpath("//div/following::span[contains(.,'Delete')][last()]");
 	By confirmBtn = By.xpath("//span[contains(text(),'Confirm')]/parent::button");
@@ -41,7 +41,7 @@ public class SeniorityLevelsPage {
 	}
 
 	public String getLastName() {
-		return driver.findElement(lastName).getText();
+		return driver.findElement(lastSeniority).getText();
 	}
 	public void clickEdit() {
 		driver.findElement(lastEditBtn).click();
@@ -74,5 +74,10 @@ public class SeniorityLevelsPage {
 		driver.findElement(nameField).clear();
 		driver.findElement(nameField).sendKeys(" ");
 		driver.findElement(nameField).sendKeys(Keys.BACK_SPACE);
+	}
+	
+	public String getMessageWindowText() {
+		By messageWindow = By.xpath("//simple-snack-bar/span");
+		return driver.findElement(messageWindow).getText();
 	}
 }

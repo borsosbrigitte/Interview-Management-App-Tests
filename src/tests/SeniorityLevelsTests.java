@@ -35,27 +35,36 @@ public class SeniorityLevelsTests extends BasePage {
 
 	}
 
-	@Test @Ignore
+	@Test 
 	//Smoke test 
 	public void addEditDeleteSeniority() throws InterruptedException {
 		Page.navigateTo(ConfigFileReader.getAppURL());
 		assertEquals(Messages.APPLICATION_TITLE, Page.getTitle());
 
 		loginFlow.login("Yonder1", "1Yonder");
-		assertEquals("home works!", loginPage.getDashboardAreaMessage());
+		assertTrue(loginPage.userIsSignedIn());
 
 		menu.openSeniorityLevelsPage();
 	
-		seniorityFlow.addNew("TestSeniority"+randomstr);
+		seniorityFlow.addNew("Test"+randomstr);
 		Thread.sleep(2000);
-		assertEquals("TestSeniority"+randomstr, senioritylevelsPage.getLastName());
-
-		seniorityFlow.editLast("TestSeniorityEdit"+randomstr);
+		assertEquals("Test"+randomstr, senioritylevelsPage.getLastName());
 		Thread.sleep(2000);
-		assertEquals("TestSeniorityEdit"+randomstr, senioritylevelsPage.getLastName());
+		assertEquals(Messages.ADDED_SENIORITY, senioritylevelsPage.getMessageWindowText());
+		Thread.sleep(2000);
 
+		seniorityFlow.editLast("Test"+randomstr+randomstr);
+		Thread.sleep(2000);
+		assertEquals("Test"+randomstr+randomstr, senioritylevelsPage.getLastName());
+		Thread.sleep(2000);
+		assertEquals(Messages.UPDATED_SENIORITY, senioritylevelsPage.getMessageWindowText());
+		
 		seniorityFlow.deleteLast();
-		assertNotEquals("TestSeniorityEdit"+randomstr, senioritylevelsPage.getLastName());
+		Thread.sleep(2000);
+		assertNotEquals("Test"+randomstr+randomstr, senioritylevelsPage.getLastName());
+		Thread.sleep(2000);
+
+		assertEquals(Messages.DELETED_SENIORITY, senioritylevelsPage.getMessageWindowText());
 	}
 	
 	//Negative scenarios
@@ -66,78 +75,81 @@ public class SeniorityLevelsTests extends BasePage {
 		assertEquals(Messages.APPLICATION_TITLE, Page.getTitle());
 
 		loginFlow.login("Yonder1", "1Yonder");
-		assertEquals("home works!", loginPage.getDashboardAreaMessage());
+		assertTrue(loginPage.userIsSignedIn());
 		
 		menu.openSeniorityLevelsPage();
 
 		seniorityFlow.addNew("Junior"+randomstr);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		assertEquals("Junior"+randomstr, senioritylevelsPage.getLastName());
+		assertEquals(Messages.ADDED_SENIORITY, senioritylevelsPage.getMessageWindowText());
+		Thread.sleep(2000);
+	
 		seniorityFlow.addNew("Junior"+randomstr);
-		assertTrue(senioritylevelsPage.confirmIsDisabled());
-		assertEquals(Messages.EXISTING_SENIORITY, Page.getAlertText());
-		assertTrue(senioritylevelsPage.nameisInvalid());
+		Thread.sleep(2000);
+		assertEquals(Messages.ERROR_EXISTING_SENIORITY, senioritylevelsPage.getMessageWindowText());
+		Thread.sleep(2000);
+
 	}
 	@Test @Ignore
 	// Creating Seniority Level with special characters
+	//nu e implementat
 	public void addNewWithSpecialCharacters() throws InterruptedException {
 		Page.navigateTo(ConfigFileReader.getAppURL());
 		assertEquals(Messages.APPLICATION_TITLE, Page.getTitle());
 		
 		loginFlow.login("Yonder1", "1Yonder");
-		assertEquals("home works!", loginPage.getDashboardAreaMessage());
+		assertTrue(loginPage.userIsSignedIn());
 		
 		menu.openSeniorityLevelsPage();
 
 		seniorityFlow.addNew("#$%Intern@#$"+randomstr);
 		Thread.sleep(2000);
-		assertTrue(senioritylevelsPage.confirmIsDisabled());
-		assertEquals(Messages.INVALID_SENIORITY, Page.getAlertText());
-		assertTrue(senioritylevelsPage.nameisInvalid());
+		assertEquals(Messages.ERROR_INVALID_SENIORITY, senioritylevelsPage.getMessageWindowText());
+		Thread.sleep(2000);
 	}
 	
 	@Test @Ignore
+	//se poate edita cu caractere speciale
 	public void editWithInvalidData() throws InterruptedException{
 		Page.navigateTo(ConfigFileReader.getAppURL());
 		assertEquals(Messages.APPLICATION_TITLE, Page.getTitle());
 
 		loginFlow.login("Yonder1", "1Yonder");
-		assertEquals("home works!", loginPage.getDashboardAreaMessage());
+		assertTrue(loginPage.userIsSignedIn());
 
 		menu.openSeniorityLevelsPage();
 		
-		seniorityFlow.addNew("SeniorityTest"+randomstr);
+		seniorityFlow.addNew("Test"+randomstr);
 		Thread.sleep(2000);
-		assertEquals("SeniorityTest"+randomstr, senioritylevelsPage.getLastName());
-
-		seniorityFlow.editLast("$%SeniorityTestEdit%$"+randomstr);
+		assertEquals("Test"+randomstr, senioritylevelsPage.getLastName());
+		
+		seniorityFlow.editLast("Test"+randomstr+"4%");
 		Thread.sleep(2000);
-		assertTrue(senioritylevelsPage.confirmIsDisabled());
-		assertEquals(Messages.INVALID_SENIORITY, Page.getAlertText());
-		assertTrue(senioritylevelsPage.nameisInvalid());
+		assertEquals(Messages.ERROR_INVALID_SENIORITY, senioritylevelsPage.getMessageWindowText());
+		Thread.sleep(2000);
 
 	}
-	@Test 
+	@Test @Ignore
 	public void editWithAlreadyExistingName() throws InterruptedException{
 		Page.navigateTo(ConfigFileReader.getAppURL());
 		assertEquals(Messages.APPLICATION_TITLE, Page.getTitle());
 
 		loginFlow.login("Yonder1", "1Yonder");
-		assertEquals("home works!", loginPage.getDashboardAreaMessage());
+		assertTrue(loginPage.userIsSignedIn());
 
 		menu.openSeniorityLevelsPage();
 		
-		seniorityFlow.addNew("AlreadyExistingEdit"+randomstr);
+		seniorityFlow.addNew("Test"+randomstr);
 		Thread.sleep(2000);
-		assertEquals("AlreadyExistingEdit"+randomstr, senioritylevelsPage.getLastName());
+		assertEquals("Test"+randomstr, senioritylevelsPage.getLastName());
 		
-		senioritylevelsPage.getSeniorities();
 		Thread.sleep(2000);
 	
-		seniorityFlow.editLast("AlreadyExistingEdit"+randomstr);
-		assertTrue(senioritylevelsPage.confirmIsDisabled());
-		assertEquals(Messages.EXISTING_SENIORITY, Page.getAlertText());
-		assertTrue(senioritylevelsPage.nameisInvalid());
+		seniorityFlow.editLast("Test"+randomstr);
+		Thread.sleep(2000);
+		assertEquals(Messages.ERROR_EDIT_WITH_EXISTING_SENIORITY, senioritylevelsPage.getMessageWindowText());
+		Thread.sleep(2000);
 	}
 	@AfterClass
 	public static void CloseTest() {
