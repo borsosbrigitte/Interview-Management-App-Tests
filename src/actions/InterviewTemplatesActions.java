@@ -10,7 +10,7 @@ public class InterviewTemplatesActions {
 		this.driver = driver;
 	}
 	
-	public void addNew(String interviewtitle){
+	public void addNew(String interviewtitle) throws InterruptedException{
 		InterviewTemplatesPage interviewTemplatesPage = new InterviewTemplatesPage(driver);
 		interviewTemplatesPage.clickNewButton();
 		interviewTemplatesPage.enterTitle(interviewtitle);
