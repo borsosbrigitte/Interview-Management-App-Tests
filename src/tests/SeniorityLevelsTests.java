@@ -47,20 +47,20 @@ public class SeniorityLevelsTests extends BasePage {
 		menu.openSeniorityLevelsPage();
 	
 		seniorityFlow.addNew("Test"+randomstr);
+		assertEquals(Messages.ADDED_SENIORITY, senioritylevelsPage.getMessageWindowText());
 		Thread.sleep(2000);
 		assertEquals("Test"+randomstr, senioritylevelsPage.getLastName());
-		Thread.sleep(2000);
-		assertEquals(Messages.ADDED_SENIORITY, senioritylevelsPage.getMessageWindowText());
 
-//		seniorityFlow.editLast("Test"+randomstr+randomstr);
-//		Thread.sleep(2000);
-//		assertEquals("Test"+randomstr+randomstr, senioritylevelsPage.getLastName());
-//		assertEquals(Messages.UPDATED_SENIORITY, senioritylevelsPage.getMessageWindowText());
-//		
-//		seniorityFlow.deleteLast();
-//		Thread.sleep(2000);
-//		assertNotEquals("Test"+randomstr+randomstr, senioritylevelsPage.getLastName());
-//		assertEquals(Messages.DELETED_SENIORITY, senioritylevelsPage.getMessageWindowText());
+		seniorityFlow.editLast("Test"+randomstr+randomstr);
+		assertEquals(Messages.UPDATED_SENIORITY, senioritylevelsPage.getMessageWindowText());
+		Thread.sleep(2000);
+		assertEquals("Test"+randomstr+randomstr, senioritylevelsPage.getLastName());
+		
+		seniorityFlow.deleteLast();	
+		assertEquals(Messages.DELETED_SENIORITY, senioritylevelsPage.getMessageWindowText());
+		Thread.sleep(2000);
+		assertNotEquals("Test"+randomstr+randomstr, senioritylevelsPage.getLastName());
+
 	}
 	
 	//Negative scenarios
@@ -76,20 +76,17 @@ public class SeniorityLevelsTests extends BasePage {
 		menu.openSeniorityLevelsPage();
 
 		seniorityFlow.addNew("Junior"+randomstr);
-		Thread.sleep(2000);
-		assertEquals("Junior"+randomstr, senioritylevelsPage.getLastName());
 		assertEquals(Messages.ADDED_SENIORITY, senioritylevelsPage.getMessageWindowText());
 		Thread.sleep(2000);
+		assertEquals("Junior"+randomstr, senioritylevelsPage.getLastName());
 	
 		seniorityFlow.addNew("Junior"+randomstr);
-		Thread.sleep(2000);
 		assertEquals(Messages.ERROR_EXISTING_SENIORITY, senioritylevelsPage.getMessageWindowText());
-		Thread.sleep(2000);
 
 	}
 	@Test @Ignore
 	// Creating Seniority Level with special characters
-	//nu e implementat
+	//nu e implementat-se pot adauga caractere speciale
 	public void addNewWithSpecialCharacters() throws InterruptedException {
 		Page.navigateTo(ConfigFileReader.getAppURL());
 		assertEquals(Messages.APPLICATION_TITLE, Page.getTitle());
@@ -99,10 +96,8 @@ public class SeniorityLevelsTests extends BasePage {
 		
 		menu.openSeniorityLevelsPage();
 
-		seniorityFlow.addNew("#$%Intern@#$"+randomstr);
-		Thread.sleep(2000);
+		seniorityFlow.addNew("#Intern$"+randomstr);
 		assertEquals(Messages.ERROR_INVALID_SENIORITY, senioritylevelsPage.getMessageWindowText());
-		Thread.sleep(2000);
 	}
 	
 	@Test @Ignore
@@ -117,13 +112,12 @@ public class SeniorityLevelsTests extends BasePage {
 		menu.openSeniorityLevelsPage();
 		
 		seniorityFlow.addNew("Test"+randomstr);
+		assertEquals(Messages.ADDED_SENIORITY, senioritylevelsPage.getMessageWindowText());
 		Thread.sleep(2000);
 		assertEquals("Test"+randomstr, senioritylevelsPage.getLastName());
 		
 		seniorityFlow.editLast("Test"+randomstr+"4%");
-		Thread.sleep(2000);
 		assertEquals(Messages.ERROR_INVALID_SENIORITY, senioritylevelsPage.getMessageWindowText());
-		Thread.sleep(2000);
 
 	}
 	@Test @Ignore
@@ -137,15 +131,13 @@ public class SeniorityLevelsTests extends BasePage {
 		menu.openSeniorityLevelsPage();
 		
 		seniorityFlow.addNew("Test"+randomstr);
+		assertEquals(Messages.ADDED_SENIORITY, senioritylevelsPage.getMessageWindowText());
 		Thread.sleep(2000);
 		assertEquals("Test"+randomstr, senioritylevelsPage.getLastName());
 		
-		Thread.sleep(2000);
-	
 		seniorityFlow.editLast("Test"+randomstr);
 		Thread.sleep(2000);
 		assertEquals(Messages.ERROR_EDIT_WITH_EXISTING_SENIORITY, senioritylevelsPage.getMessageWindowText());
-		Thread.sleep(2000);
 	}
 	@AfterClass
 	public static void CloseTest() {
