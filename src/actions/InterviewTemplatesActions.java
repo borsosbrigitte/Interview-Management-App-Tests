@@ -14,6 +14,7 @@ public class InterviewTemplatesActions {
 		InterviewTemplatesPage interviewTemplatesPage = new InterviewTemplatesPage(driver);
 		interviewTemplatesPage.clickNewButton();
 		interviewTemplatesPage.enterTitle(interviewtitle);
+		Thread.sleep(2000);
 		interviewTemplatesPage.clickCheckbox();
 		interviewTemplatesPage.clickConfirm();
 

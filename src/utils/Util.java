@@ -14,7 +14,7 @@ public class Util {
 		String characters="ABCDEFGHJKLMNOPRSTUVWXYZ";
 		String randomString="";
 		
-		int length=3;
+		int length=2;
 		Random rand=new Random();
 		char[] text=new char[length];
 		for(int i=0;i<length;i++) {

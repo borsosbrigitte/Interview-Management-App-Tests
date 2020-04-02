@@ -23,7 +23,7 @@ public class InterviewTemplatesPage {
 	By confirmBtn = By.xpath("//span[contains(text(),'Confirm')]/parent::button");
 	By confirmBtnDisabled = By.xpath("//button[@disabled='true']/span[contains(text(),'Confirm')]");
 	By cancelBtn = By.xpath("//button/span[text()='Cancel']");
-	By questionsCheckbox = By.xpath("//input[@type='checkbox']");
+	By questionsCheckbox = By.xpath("//mat-checkbox/label");
 	
 	// Actions
 		public void clickNewButton() {

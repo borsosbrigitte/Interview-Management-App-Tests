@@ -59,10 +59,9 @@ public class InterviewTemplatesTests extends BasePage {
 		assertTrue(loginPage.userIsSignedIn());
 		
 		interviewFlow.addNew("Test"+randomstr);
+		Thread.sleep(2000);
 		assertEquals("Test"+randomstr, interviewTemplatesPage.getLastInterviewTemplate());
-		Thread.sleep(2000);
 		assertEquals(Messages.ADDED_INTERVIEW_TEMPLATE, interviewTemplatesPage.getMessageWindowText());
-		Thread.sleep(2000);
 
 //		seniorityFlow.editLast("Test"+randomstr+randomstr);
 //		Thread.sleep(2000);

@@ -20,7 +20,7 @@ public class LoginTests extends BasePage{
 	}
 	
 	//Positive scenario
-	@Test
+	@Test @Ignore
 	// Logging in - successfully
 	public void Login() throws InterruptedException {
 		Page.navigateTo(ConfigFileReader.getAppURL());
@@ -29,6 +29,18 @@ public class LoginTests extends BasePage{
 		loginFlow.login("Yonder1", "1Yonder");
 
 		assertTrue(loginPage.userIsSignedIn());
+	}
+	
+	@Test
+	//Log in&sign out - successfully
+	public void LoginandSignOut() throws InterruptedException{
+		Page.navigateTo(ConfigFileReader.getAppURL());
+		assertEquals(Messages.APPLICATION_TITLE, Page.getTitle());
+
+		loginFlow.login("Yonder1", "1Yonder");
+		assertTrue(loginPage.userIsSignedIn());
+
+		menu.signOut();
 	}
 
 	// Negative scenarios
@@ -51,7 +63,7 @@ public class LoginTests extends BasePage{
 		Page.navigateTo(ConfigFileReader.getAppURL());
 		assertEquals(Messages.APPLICATION_TITLE, Page.getTitle());
 
-		loginFlow.login("Yonder1", "unmatchingPassword"+Util.generateRandomInt(2000));
+		loginFlow.login("Yonder1", "unmatchingPassword"+Util.generateRandomInt(5));
 		
 		assertEquals(Messages.LOGIN_ERROR, Page.getAlertText());
 	}
@@ -61,7 +73,7 @@ public class LoginTests extends BasePage{
 		Page.navigateTo(ConfigFileReader.getAppURL());
 		assertEquals(Messages.APPLICATION_TITLE, Page.getTitle());
 
-		loginFlow.login("InexistingUser"+Util.generateRandomInt(2000), "InexistingUserPassword"+Util.generateRandomInt(2000));
+		loginFlow.login("InexistingUser"+Util.generateRandomInt(5), "InexistingUserPassword"+Util.generateRandomInt(5));
 		
 		assertEquals(Messages.LOGIN_ERROR, Page.getAlertText());
 	}
