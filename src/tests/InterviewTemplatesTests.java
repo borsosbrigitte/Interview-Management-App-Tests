@@ -59,22 +59,95 @@ public class InterviewTemplatesTests extends BasePage {
 		assertTrue(loginPage.userIsSignedIn());
 		
 		interviewFlow.addNew("Test"+randomstr);
-		Thread.sleep(2000);
-		assertEquals("Test"+randomstr, interviewTemplatesPage.getLastInterviewTemplate());
 		assertEquals(Messages.ADDED_INTERVIEW_TEMPLATE, interviewTemplatesPage.getMessageWindowText());
+		Thread.sleep(1000);
+		assertEquals("Test"+randomstr, interviewTemplatesPage.getLastInterviewTemplate());
 
-//		seniorityFlow.editLast("Test"+randomstr+randomstr);
-//		Thread.sleep(2000);
-//		assertEquals("Test"+randomstr+randomstr, senioritylevelsPage.getLastName());
-//		Thread.sleep(2000);
-//		assertEquals(Messages.UPDATED_SENIORITY, senioritylevelsPage.getMessageWindowText());
-//		
-//		seniorityFlow.deleteLast();
-//		Thread.sleep(2000);
-//		assertNotEquals("Test"+randomstr+randomstr, senioritylevelsPage.getLastName());
-//		Thread.sleep(2000);
-//
-//		assertEquals(Messages.DELETED_SENIORITY, senioritylevelsPage.getMessageWindowText());
+		interviewFlow.editLast("Test"+randomstr+randomstr);
+		assertEquals(Messages.UPDATED_INTERVIEW_TEMPLATE, interviewTemplatesPage.getMessageWindowText());
+		Thread.sleep(1000);
+		assertEquals("Test"+randomstr+randomstr, interviewTemplatesPage.getLastInterviewTemplate());
+		
+		interviewFlow.deleteLast();
+		assertEquals(Messages.DELETED_INTERVIEW_TEMPLATE,interviewTemplatesPage.getMessageWindowText());
+		Thread.sleep(1000);
+		assertNotEquals("Test"+randomstr+randomstr, interviewTemplatesPage.getLastInterviewTemplate());
+	}
+	
+	//Negative scenarios
+	@Test @Ignore
+	public void addNewWithAlreadyExistingTitle() throws InterruptedException{
+		Page.navigateTo(ConfigFileReader.getAppURL());
+		assertEquals(Messages.APPLICATION_TITLE, Page.getTitle());
+		
+		loginFlow.login("Yonder1", "1Yonder");
+		assertTrue(loginPage.userIsSignedIn());
+		
+		interviewFlow.addNew("Test"+randomstr);
+		assertEquals(Messages.ADDED_INTERVIEW_TEMPLATE, interviewTemplatesPage.getMessageWindowText());
+		Thread.sleep(1000);
+		assertEquals("Test"+randomstr, interviewTemplatesPage.getLastInterviewTemplate());
+		
+		interviewFlow.addNew("Test"+randomstr);
+		assertEquals(Messages.ERROR_EXISTING_INTERVIEW_TITLE, interviewTemplatesPage.getMessageWindowText());
+
+	}
+	
+	@Test @Ignore
+	//momentan se pot adauga caractere speciale
+	public void addNewWithSpecialCharacters() throws InterruptedException {
+		Page.navigateTo(ConfigFileReader.getAppURL());
+		assertEquals(Messages.APPLICATION_TITLE, Page.getTitle());
+		
+		loginFlow.login("Yonder1", "1Yonder");
+		assertTrue(loginPage.userIsSignedIn());
+		
+		interviewFlow.addNew("Test#%"+randomstr);
+		assertEquals(Messages.ERROR_INVALID_INTERVIEW_TITLE, interviewTemplatesPage.getMessageWindowText());
+		Thread.sleep(1000);
+		assertNotEquals("Test#%"+randomstr, interviewTemplatesPage.getLastInterviewTemplate());
+
+	}
+	
+	@Test @Ignore
+	//momentan se poate edita cu caractere speciale
+	public void editWithInvalidData() throws InterruptedException{
+		Page.navigateTo(ConfigFileReader.getAppURL());
+		assertEquals(Messages.APPLICATION_TITLE, Page.getTitle());
+
+		loginFlow.login("Yonder1", "1Yonder");
+		assertTrue(loginPage.userIsSignedIn());
+
+		interviewFlow.addNew("Test"+randomstr);
+		Thread.sleep(1000);
+		assertEquals(Messages.ADDED_INTERVIEW_TEMPLATE, interviewTemplatesPage.getMessageWindowText());
+		Thread.sleep(1000);
+		assertEquals("Test"+randomstr, interviewTemplatesPage.getLastInterviewTemplate());
+
+		interviewFlow.editLast("Test$%#"+randomstr);
+		assertEquals(Messages.ERROR_INVALID_INTERVIEW_TITLE, interviewTemplatesPage.getMessageWindowText());
+		Thread.sleep(1000);
+		assertNotEquals("Test$%#"+randomstr, interviewTemplatesPage.getLastInterviewTemplate());
+
+	}
+	@Test @Ignore
+	//momentan se poate edita cu un titlu deja existent
+	public void editWithAlreadyExistingTitle() throws InterruptedException{
+		Page.navigateTo(ConfigFileReader.getAppURL());
+		assertEquals(Messages.APPLICATION_TITLE, Page.getTitle());
+
+		loginFlow.login("Yonder1", "1Yonder");
+		assertTrue(loginPage.userIsSignedIn());
+
+		interviewFlow.addNew("Test"+randomstr);
+		assertEquals(Messages.ADDED_INTERVIEW_TEMPLATE, interviewTemplatesPage.getMessageWindowText());
+		Thread.sleep(1000);
+		assertEquals("Test"+randomstr, interviewTemplatesPage.getLastInterviewTemplate());
+
+		interviewFlow.editLast("Test"+randomstr);
+		assertEquals(Messages.ERROR_EXISTING_INTERVIEW_TITLE, interviewTemplatesPage.getMessageWindowText());
+		Thread.sleep(1000);
+		assertNotEquals("Test"+randomstr, interviewTemplatesPage.getLastInterviewTemplate());
 	}
 	@AfterClass
 	public static void CloseTest() {
